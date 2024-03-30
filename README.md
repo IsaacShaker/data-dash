@@ -2,7 +2,7 @@
 
 Submitted by: **Isaac Shaker**
 
-This web app: **Crypto Data Board**
+This web app: **Displays the top 10 crypto coins for the day by volume traded.**
 
 Time spent: **3** hours spent in total
 
@@ -13,7 +13,7 @@ The following **required** functionality is completed:
 - [x] **The list displays a list of data fetched using an API call**
 - [x] **Data uses the useEffect React hook and async/await syntax**
 - [x] **The app dashboard includes at least three summary statistics about the data such as**
-  - [x] _insert details_
+  - [x] _Total Volue Tradded, Highest Price, Number of Coins_
 - [x] **A search bar allows the user to search for an item in the fetched data**
 - [ ] **Multiple different filters (2+) allow the user to filter items in the database by specified categories**
 
@@ -44,7 +44,8 @@ GIF created with LICEcap
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I had a difficult time getting the side Nav to be in place. When using a fized position, the rest of the application treated the nav as a ghost and would go underneath it.
+The problem was solved by treating the nav like any other component and using flex box with flow-direction row. I am over simplifing the solution for the sake of discussion. Many problems came up when trying to keep the nav a fixed size and without scrolling effecting it.
 
 ## License
 
