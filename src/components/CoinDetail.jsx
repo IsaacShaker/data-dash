@@ -20,10 +20,7 @@ const CoinDetail = () => {
 
       const detailsJson = await details.json();
       const descripJson = await description.json();
-
-      console.log(detailsJson);
-      console.log(descripJson);
-
+      console.log(detailsJson.DISPLAY);
       setFullDetails({
         numbers: detailsJson.DISPLAY,
         textData: descripJson.Data,
@@ -34,7 +31,7 @@ const CoinDetail = () => {
   }, [params.symbol]);
 
   return (
-    <div>
+    <>
       {fullDetails && (
         <div>
           <h1>{fullDetails.textData[params.symbol].FullName}</h1>
@@ -51,6 +48,7 @@ const CoinDetail = () => {
             This coin was built with the algorithm{" "}
             {fullDetails.textData[params.symbol].Algorithm}{" "}
           </div>
+          <br></br>
           <div className="centerTable">
             <table>
               <tbody>
@@ -67,7 +65,7 @@ const CoinDetail = () => {
                   <td>{fullDetails.textData[params.symbol].Symbol}</td>
                 </tr>
                 <tr>
-                  <th>24r Volume</th>
+                  <th>24 hr Volume</th>
                   <td>{fullDetails.numbers[params.symbol].USD.VOLUME24HOUR}</td>
                 </tr>
                 <tr>
@@ -93,13 +91,14 @@ const CoinDetail = () => {
               </tbody>
             </table>
           </div>
-          <CoinChart
+          <br></br>
+          {/* <CoinChart
             symbol={params.symbol}
             market={fullDetails.numbers[params.symbol].USD.MARKET}
-          />
+          /> */}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

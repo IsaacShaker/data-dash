@@ -1,11 +1,8 @@
 const NotFound = () => {
   return (
-    <main style={{ padding: "1rem" }}>
-      <p>There's nothing here!</p>
-      <Link style={{ color: "white" }} to="/">
-        Back to Home
-      </Link>
-    </main>
+    <div>
+      <h1>404 Not Found</h1>
+    </div>
   );
 };
 

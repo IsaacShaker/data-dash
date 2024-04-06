@@ -2,7 +2,7 @@ import CoinDetail from "../components/CoinDetail";
 
 const DetailView = () => {
   return (
-    <div>
+    <div className="data-container">
       <CoinDetail />
     </div>
   );

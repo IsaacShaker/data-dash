@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import SideNav from "./components/SideNav";
 import Header from "./components/Header";
 import CoinTable from "./components/CoinTable";
 import Card from "./components/Card";
+import CoinChart from "./components/CoinChart";
 import "./App.css";
 
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
@@ -16,6 +16,10 @@ function App() {
   const [totalVol, setTotalVol] = useState(0);
   const [highestPrice, setHighestPrice] = useState(0);
   const [numCoins, setNumCoins] = useState(0);
+  const [coinChart, setCoinChart] = useState({
+    symbol: "",
+    market: "",
+  });
 
   const resetFiltered = () => {
     let filtered = [];
@@ -33,6 +37,10 @@ function App() {
       const json = await response.json();
       // set list
       setList(json.Data);
+      setCoinChart({
+        symbol: json.Data[0].CoinInfo.Internal,
+        market: json.Data[0].DISPLAY.USD.MARKET,
+      });
 
       // set filtered list
       let filtered = [];
@@ -82,23 +90,46 @@ function App() {
   const filterMaxPrice = () => {};
 
   return (
-    <div className="App">
-      <SideNav />
-      <div className="rest-of-page">
-        <Header
-          handleChange={(inputString) => searchItems(inputString.target.value)}
-        />
-        <div className="data-container">
-          <div className="summary-data-container">
-            <Card name={"Total Volume"} stat={Math.floor(totalVol)} />
-            <Card name={"Highest Price"} stat={Math.floor(highestPrice)} />
-            <Card name={"Number of Coins"} stat={numCoins} />
-          </div>
-          <CoinTable list={list} filteredData={filteredResults} />
+    <>
+      <Header
+        handleChange={(inputString) => searchItems(inputString.target.value)}
+      />
+      <div className="data-container">
+        <div className="summary-data-container">
+          <Card
+            name={"Total Volume"}
+            stat={"$" + reduceCurrency(Math.floor(totalVol))}
+          />
+          <Card
+            name={"Highest Price"}
+            stat={"$" + reduceCurrency(Math.floor(highestPrice))}
+          />
+          <Card name={"Number of Coins"} stat={numCoins} />
+        </div>
+        <div className="listchart-container">
+          <CoinTable
+            list={list}
+            filteredData={filteredResults}
+            changeChart={setCoinChart}
+          />
+          <CoinChart symbol={coinChart.symbol} market={coinChart.market} />
         </div>
       </div>
-    </div>
+    </>
   );
+}
+
+function reduceCurrency(labelValue) {
+  // Nine Zeroes for Billions
+  return Math.abs(Number(labelValue)) >= 1.0e9
+    ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + "B"
+    : // Six Zeroes for Millions
+    Math.abs(Number(labelValue)) >= 1.0e6
+    ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + "M"
+    : // Three Zeroes for Thousands
+    Math.abs(Number(labelValue)) >= 1.0e3
+    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
+    : Math.abs(Number(labelValue)).toFixed(2);
 }
 
 export default App;

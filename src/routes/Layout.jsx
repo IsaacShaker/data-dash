@@ -1,18 +1,13 @@
 import { Outlet, Link } from "react-router-dom";
+import SideNav from "../components/SideNav";
 
 const Layout = () => {
   return (
-    <div>
-      <nav>
-        <ul>
-          <li className="home-link" key="home-button">
-            <Link style={{ color: "white" }} to="/">
-              Home
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <Outlet />
+    <div className="App">
+      <SideNav />
+      <div className="rest-of-page">
+        <Outlet />
+      </div>
     </div>
   );
 };
